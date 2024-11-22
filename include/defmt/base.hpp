@@ -61,7 +61,7 @@ DEFMT_TYPE_CONSTANT(float, float_type);
 DEFMT_TYPE_CONSTANT(double, double_type);
 // DEFMT_TYPE_CONSTANT(long double, long_double_type);
 // DEFMT_TYPE_CONSTANT(const Char*, cstring_type);
-// DEFMT_TYPE_CONSTANT(basic_string_view<Char>, string_type);
+DEFMT_TYPE_CONSTANT(std::string, string_type);
 // DEFMT_TYPE_CONSTANT(const void*, pointer_type);
 
 constexpr auto is_integral_type(type t) -> bool {
@@ -120,6 +120,7 @@ struct arg_mapper {
   auto map(float val) -> float { return val; }
   auto map(double val) -> double { return val; }
   auto map(long double val) -> long double { return val; }
+  auto map(std::string val) -> std::string { return val; }
 
   auto map(void* val) -> const void* { return val; }
   auto map(const void* val) -> const void* { return val; }
@@ -227,6 +228,7 @@ fast_float::from_chars_result_t<char> deformat_parse(std::string_view view, defo
   // case type::long_double_type:
   //   return fast_float::from_chars(view.data(), view.data() + view.size(), *arg.get<long double>());
   case type::string_type:
+    *arg.get<std::string>() = std::string(view);
     break;
   // case type::custom_typ:
     // break;

@@ -14,18 +14,28 @@ using namespace std;
 
 int main() {
     string str{"hello kevin, your score is 99. Good job!"};
+    std::string name;
     int score = 0;
-    auto ret = defmt::deformat("hello kevin, your score is {}. Good job!", str, score);
+    auto ret = defmt::deformat("hello {}, your score is {}. Good job!", str, name, score);
     if (ret.ec != std::errc())
         cout << "deformat failed!" << endl;
     else
-        cout << "score is:" << score << " " << endl;
+        cout << name << ":" << score << endl;
     return 0;
 }
 
 
+
 ```
 
+## current supported type
+- int
+- uint
+- long long
+- unsigned long long
+- float
+- double
+- string
 
 ## TODO:
 - [ ] support more types

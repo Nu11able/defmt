@@ -26,6 +26,15 @@ TEST(BasicTest, FloatTest) {
     EXPECT_NEAR(num3, 18446744073.7095, 1e-5);
 }
 
+TEST(BasicTest, StringTest) {
+    std::string str{"hello world"};
+    std::string str1, str2;
+    defmt::deformat("{} {}", str, str1, str2);
+    EXPECT_EQ(str1, "hello");
+    EXPECT_EQ(str2, "world");
+}
+
+
 TEST(CombinationTest, MixedTest) {
     std::string str{"2147483647 4294967295 9223372036854775807 18446744073709551615 123.4567 92233.72036 18446744073.7095"};
     int32_t num1 = 0;
@@ -63,6 +72,16 @@ TEST(CombinationTest, MixedTestWithSpliter) {
     EXPECT_NEAR(num6, 92233.72036, 1e-5);
     EXPECT_NEAR(num7, 18446744073.7095, 1e-5);
 }
+
+TEST(CombinationTest, MixedTestString) {
+    std::string str{"hello kevin, your score is 99!"};
+    std::string name;
+    int score = 0;
+    defmt::deformat("hello {}, your score is {}!", str, name, score);
+    EXPECT_EQ(name, "kevin");
+    EXPECT_EQ(score, 99);
+}
+
 
 
 int main(int argc, char **argv) {
